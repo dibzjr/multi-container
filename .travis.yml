@@ -1,0 +1,27 @@
+sudo : required
+language: generic 
+services:
+ - docker
+
+before_install:
+ - docker build -t dibzjr/docker-react-test -f ./client/Dockerfile.dev ./client 
+
+
+scripts:
+ - docker run -e CI=true dibzjr/docker-react-test npm run test -- --coverage 
+
+after_success:
+ - docker build -t dibzjr/multi-client ./client 
+ - docker build -t dibzjr/multi-nginx ./nginx 
+ - docker build -t dibzjr/multi-server ./server 
+ - docker build -t dibzjr/multi-worker ./worker 
+
+ #LOGIN IN TO THE DOCKER CLI
+
+ - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+ #PUSH IMAGES TO DOCKER HUB
+ - docker push dibzjr/multi-client
+ - docker push dibzjr/multi-nginx
+ - docker push dibzjr/multi-server
+ - docker push dibzjr/multi-worker
