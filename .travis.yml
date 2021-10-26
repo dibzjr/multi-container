@@ -21,7 +21,7 @@ after_success:
  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
  #PUSH IMAGES TO DOCKER HUB
- - docker push dibzjr/multi-client
  - docker push dibzjr/multi-nginx
  - docker push dibzjr/multi-server
  - docker push dibzjr/multi-worker
+ - docker push dibzjr/multi-client
