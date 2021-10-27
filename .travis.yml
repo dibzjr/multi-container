@@ -28,7 +28,7 @@ after_success:
 
 
  #deploy to AWS
- deploy:
+deploy:
   provider: elasticbeanstalk
   region: 'eu-central-1'
   app: 'multi-docker-react'
